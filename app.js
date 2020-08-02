@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+require('dotenv').config()
 
 // import routes
 const routes = require('./routes');
@@ -18,9 +19,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect to db
 // useFindAndModify: false - to use native mongodb findOneAndUpdate operations across the project
-mongoose.connect('mongodb+srv://vaibhav:NEMm2Zm6CdJkQp6@cluster0.ymusx.mongodb.net/codify?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).
     catch(error => createError(error))
-    
+
 const db = mongoose.connection;
 
 if (!db) {
